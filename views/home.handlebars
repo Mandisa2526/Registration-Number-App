@@ -105,42 +105,39 @@
                     </div>
 
 
-                    <div class="box-2 text-center ">
-                        <div class="radioBtns">
-                            <form action="/reg_numbers" method="post">
-                                <input type="radio" name="townRadio" class="townItemTypeRadio" value="CFA">
-                                <label class="label-body">Wolseley</label>
-                                <input type="radio" name="townRadio" class="townItemTypeRadio" value="CA">
-                                <label class="label-body">Cape Town</label>
-                                <input type="radio" name="townRadio" class="townItemTypeRadio" value="CFM">
-                                <label class="label-body">Somerset West</label>
-                                <div class="text-center">
-                                    <button class="btn-default btn btn-info" type="submit" name="button">Show</button>
-                                </div>
-
-                            </form>
-
-                        </div><br>
-
-                        <div class="dropDown ">
-                            <form action="/action_page.php">
-                                <label for="cars">Choose a Town:</label>
-                                <select name="cars" id="cars">
-                                    <option value="bellville">Bellville</option>
-                                    <option value="cape">Cape Town</option>
-                                    <option value="stellies">stellenbosch</option>
-                                    <option value="camps">CampsBay</option>
-                                </select>
-                            </form>
+                </form>
+                <form action="/reg_numbers" method="post">
+                    <div class="text-center" style="padding: 1em;">
+                        <input type="radio" name="townRadio" class="townItemTypeRadio" value="CFA">
+                        <label class="label-body">Wolseley</label>
+                        <input type="radio" name="townRadio" class="townItemTypeRadio" value="CA">
+                        <label class="label-body">Cape Town</label>
+                        <input type="radio" name="townRadio" class="townItemTypeRadio" value="CFM">
+                        <label class="label-body">Somerset West</label>
+                        <br>
+                        <div class="text-center" style="padding: 1em;">
+                          <button class="btn-default btn btn-info" type="submit" name="button">Show</button>  
                         </div>
+                    </div>
+                </form>
 
+                    <div class="dropDown text-center">
+                        <form action="/action_page.php">
+                            <label for="cars">Choose a Town:</label>
+                            <select name="cars" id="cars">
+                                <option value="bellville">Bellville</option>
+                                <option value="cape">Cape Town</option>
+                                <option value="stellies">stellenbosch</option>
+                                <option value="camps">CampsBay</option>
+                            </select>
+                        </form>
                     </div>
 
-                    <div class="box-3">
-                        <ul style="list-style-type:none;">
-                            {{#each registrations}}
+                <div class="box-3">
+                    <ul style="list-style-type:none;">
+                        {{#each registrations}}
 
-                            <li style="font-weight:bolder;
+                        <li style="font-weight:bolder;
                             text-align: center;
                             border-radius: 25px;
                             border: 4px solid black;
@@ -149,11 +146,10 @@
                             margin:1em;
                             width: 120px;
                             height: 50px;">{{this}}</li>
-                            {{/each}}
+                        {{/each}}
 
-                        </ul>
-                    </div>
-                </form>
+                    </ul>
+                </div>
             </div>
             <script>
 

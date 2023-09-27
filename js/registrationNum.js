@@ -1,11 +1,12 @@
 export default function RegistrationNumberFact() {
-    let regNumber = [];
+    let regNumbers = [];
     let error = '';
 
-    function setRegistration(number) {
-        if(number){
-            regNumber.push(number);
+    function addRegistration(regNumber) {
+        if(regNumber){
+            regNumbers.push(regNumber);
         }
+        setError(regNumber);
     }
 
     function setError(number){
@@ -17,29 +18,23 @@ export default function RegistrationNumberFact() {
         }
     }
 
-    function getRegistration(){
-        return regNumber;
+    function getAllRegistration() {
+        return regNumbers;
     }
 
-    function getError(){
+    function getError() {
         return error;
     }
-    
-    function checkForTown(number){
-       if(number.startsWith("CA")){
-          regNumber;
-       }
+
+    function getRegistrationForTown(town) {
+        console.log(regNumbers.filter(element => element.startsWith(town)));
+        return regNumbers.filter(element => element.startsWith(town));
        
     }
-    function getForTown(){
-        return result;
-    }
     return {
-        setRegistration,
-        getRegistration,
-        setError,
+        addRegistration,
+        getAllRegistration,
         getError,
-        checkForTown,
-        getForTown
+        getRegistrationForTown
     }
 }

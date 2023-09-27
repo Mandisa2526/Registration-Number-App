@@ -30,31 +30,25 @@ app.use(express.static('public'));
 
 app.get('/', function (req, res) {
     res.render('home', {
-        registrations: registrationNumObject.getRegistration(),
+        registrations: registrationNumObject.getAllRegistration(),
         errorMessages: registrationNumObject.getError(),
-        
     });
 
 });
+
+
 app.post('/reg_numbers',function(req,res){
-   let regForTown = req.body.inputNumber;
-   registrationNumObject.checkForTown(regForTown)
+   let regForTown = req.body.townRadio;
    res.render('home', {
-    registrations:  registrationsForTown
-   });
+        registrations:  registrationNumObject.getRegistrationForTown(regForTown),
+   }); 
 });
 
 
 app.post('/',function (req, res) {
-
     let regInput = req.body.inputNumber;
-    let error = req.body.inputNumber;
-
-    registrationNumObject.setRegistration(regInput);
-    registrationNumObject.setError(error);
-
+    registrationNumObject.addRegistration(regInput);
     res.redirect('/'); 
-
 });
 
 

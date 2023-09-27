@@ -1,0 +1,22 @@
+.container{
+    height : 100vh;
+    /*Change the value (works like flex) 👇 here to see results*/
+    flex-direction: row;
+    
+ }
+ body{
+    background-color: cornflowerblue;
+}
+ .box-2{
+      flex-direction: row;
+ }
+ 
+ [class ^="box-"]{
+     width: 140px;
+     height: 140px;
+     background-color: skyblue;
+     border: 2px solid black;
+ 
+ 
+     font-size: 65px;
+ }

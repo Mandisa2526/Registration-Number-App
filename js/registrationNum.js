@@ -27,9 +27,7 @@ export default function RegistrationNumberFact() {
     }
 
     function getRegistrationForTown(town) {
-        console.log(regNumbers.filter(element => element.startsWith(town)));
-        return regNumbers.filter(element => element.startsWith(town));
-       
+        return regNumbers.filter(element => element.startsWith(town)); 
     }
     return {
         addRegistration,

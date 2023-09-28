@@ -43,6 +43,12 @@ app.post('/reg_numbers',function(req,res){
         registrations:  registrationNumObject.getRegistrationForTown(regForTown),
    }); 
 });
+app.post('/choose_town',function(req,res){
+    let regForTowns = req.body.cars;
+    res.render('home', {
+        registrations:  registrationNumObject.getRegistrationForTown(regForTowns),
+    }); 
+ });
 
 
 app.post('/',function (req, res) {

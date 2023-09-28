@@ -5,7 +5,7 @@ CREATE TABLE towns (
 );
 CREATE TABLE registration (
 	id SERIAL NOT NULL PRIMARY KEY,
-	registration_number INT NOT NULL,
-	towns_id int,
+	registration_number TEXT NOT NULL,
+	towns_id INT,
 	foreign key (towns_id) references towns(id) ON DELETE CASCADE
 );

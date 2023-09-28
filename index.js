@@ -2,15 +2,20 @@ import exphbs from 'express-handlebars';
 import express from 'express';
 import bodyParser from 'body-parser';
 import RegistrationNumberFact from './js/registrationNum.js';
-// connect, query, and disconnect is with async/await:
-import client from 'pg';
+import pgPromise from 'pg-promise';
+import  session from 'express-session';
+import Query from './Query/queryReg.js';
 
-//const client = new Client();
-//await client.connect();
+// Create Database Connection
+const pgp = pgPromise();
+const connectionString = "postgres://lgcqntdq:P4UKjMZH_2xNewSFy46RaG55YEmwDqsJ@mahmud.db.elephantsql.com/lgcqntdq?ssl=true";
+const db = pgp(connectionString);
+
+let database = Query(db);
 
 let app = express();
 //factory function instance
-let registrationNumObject = RegistrationNumberFact();
+let registrationNumObject = RegistrationNumberFact(db);
 
 //2.configure express-hanndlebar
 const handlebarSetup = exphbs.engine({
@@ -43,12 +48,6 @@ app.post('/reg_numbers',function(req,res){
         registrations:  registrationNumObject.getRegistrationForTown(regForTown),
    }); 
 });
-app.post('/choose_town',function(req,res){
-    let regForTowns = req.body.cars;
-    res.render('home', {
-        registrations:  registrationNumObject.getRegistrationForTown(regForTowns),
-    }); 
- });
 
 
 app.post('/',function (req, res) {

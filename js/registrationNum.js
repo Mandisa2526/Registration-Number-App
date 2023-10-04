@@ -1,44 +1,52 @@
-export default function RegistrationNumberFact() {
-    let regNumbers = [];
+export default function RegistrationNumberFact(query) {
     let error = '';
-     let letters =   /^[A-Z]{0,2}$/;;
-    
-    function addRegistration(regNumber) {
-        setError(regNumber);
+    let letters =   /^[A-Z]{0,2}$/;
+
+    async function addRegistration(regNumber) {
+        await setError(regNumber);
         if (!error) {
-            regNumbers.push(regNumber);
+            await query.insertRegNum(regNumber);
         }
     }
 
-    function setError(regNumber){
-        
+    async function setError(regNumber){
+        let regNumbers = await getAllRegistration();
         if(!regNumber){
             error = 'Enter registration number!';
         //go through the an array
         //check if the regNumber is in an array
-        } else if(regNumbers.indexOf(regNumber) !== -1){
+        } else if (regNumbers.indexOf(regNumber) !== -1) {
             error = "Registration number exists!";
-        }else if( regNumber.length > 10 || regNumber.length <= 6){
-            error = 'Invalid format!';
+        } else if ( regNumber.length > 10) {
+            error = 'Maximum Legnth exceeded!';
             //should not allow more than 2 Alphabet characters
-        }else if(!regNumber.match(letters)){
-            error = 'Invalid format!';
-        }else{
+        } else{
             error = undefined;
         }
     }
 
-    function getAllRegistration() {
-        return regNumbers;
+    async function getAllRegistration() {
+        let numbers = [];
+        let result = await query.getRegistrations();
+        result.forEach(element => {
+            numbers.push(element.registration_number);
+        });
+        return numbers;
     }
 
     function getError() {
         return error;
     }
 
-    function getRegistrationForTown(town) {
-        return regNumbers.filter(element => element.startsWith(town));
+    async function getRegistrationForTown(town) {
+        let regNumbers = await getAllRegistration();
+        let registrationsForTown = regNumbers.filter(element => element.startsWith(town));
+        if(registrationsForTown.length == 0){
+            error = "Cannot Filter town not added!";
+       }
+       return registrationsForTown;
     }
+
     return {
         getAllRegistration,
         getError,

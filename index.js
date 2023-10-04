@@ -12,11 +12,11 @@ const pgp = pgPromise();
 const connectionString = "postgres://lgcqntdq:P4UKjMZH_2xNewSFy46RaG55YEmwDqsJ@mahmud.db.elephantsql.com/lgcqntdq?ssl=true";
 const db = pgp(connectionString);
 
-let database = Query(db);
+let query = Query(db);
 
 let app = express();
 //factory function instance
-let registrationNumObject = RegistrationNumberFact(db);
+let registrationNumObject = RegistrationNumberFact(query);
 
 //2.configure express-hanndlebar
 const handlebarSetup = exphbs.engine({
@@ -44,31 +44,29 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-app.get('/', function (req, res) {
+app.get('/', async function (req, res) {
     //req.flash('error', registrationNumObject.getError());
+    let registrations = await registrationNumObject.getAllRegistration();
     res.render('home', {
-        registrations: registrationNumObject.getAllRegistration(),
+        registrations,
         errorMessages: registrationNumObject.getError(),
     });
 
 });
 
 
-app.post('/reg_numbers',function(req,res){
+app.post('/reg_numbers', async function(req,res){
    let regForTown = req.body.townRadio;
+   let registrations = await registrationNumObject.getRegistrationForTown(regForTown);
    res.render('home', {
-        registrations:  registrationNumObject.getRegistrationForTown(regForTown),
+        registrations,
    }); 
 });
 
 
 app.post('/',async function (req, res) {
     let regInput = req.body.inputNumber;
-    registrationNumObject.addRegistration(regInput);
-    if (registrationNumObject.getError() === undefined) {
-        await database.insertRegNum(regInput);
-    }
-    
+    await registrationNumObject.addRegistration(regInput);
     res.redirect('/'); 
 });
 

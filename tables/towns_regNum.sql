@@ -6,6 +6,6 @@ CREATE TABLE towns (
 CREATE TABLE registration (
 	id SERIAL NOT NULL PRIMARY KEY,
 	registration_number TEXT NOT NULL,
-	towns_id INT,
+	towns_id INT NOT NULL,
 	foreign key (towns_id) references towns(id) ON DELETE CASCADE
 );

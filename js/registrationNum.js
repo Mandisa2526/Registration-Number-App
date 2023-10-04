@@ -5,7 +5,7 @@ export default function RegistrationNumberFact(query) {
     async function addRegistration(regNumber) {
         await setError(regNumber);
         if (!error) {
-            await query.insertRegNum(regNumber);
+            error = await query.insertRegNum(regNumber);
         }
     }
 
@@ -18,7 +18,7 @@ export default function RegistrationNumberFact(query) {
         } else if (regNumbers.indexOf(regNumber) !== -1) {
             error = "Registration number exists!";
         } else if ( regNumber.length > 10) {
-            error = 'Maximum Legnth exceeded!';
+            error = 'minimun Legnth exceeded!';
             //should not allow more than 2 Alphabet characters
         } else{
             error = undefined;

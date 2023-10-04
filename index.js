@@ -13,7 +13,7 @@ const connectionString = "postgres://lgcqntdq:P4UKjMZH_2xNewSFy46RaG55YEmwDqsJ@m
 const db = pgp(connectionString);
 
 let query = Query(db);
-
+let database = Query(db);
 let app = express();
 //factory function instance
 let registrationNumObject = RegistrationNumberFact(query);

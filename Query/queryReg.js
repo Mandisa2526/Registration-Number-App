@@ -2,6 +2,9 @@ export default function Query(db){
     
     async function insertRegNum(regNum) {
         let town = await getTownId(regNum);
+        if (!town) {
+            return 'Town does not exist';
+        }
         await db.none(`INSERT INTO registration(registration_number,towns_id) VALUES ('${regNum}','${town.id}')`);
     }
 

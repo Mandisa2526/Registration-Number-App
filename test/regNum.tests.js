@@ -93,11 +93,11 @@ describe('The basic database web app', function(){
        
     // });
 
-    it("should able to insert user names", async function () {
+    it("should able to insert registration numbers", async function () {
         this.timeout(10000);
         let database = Query(db);
 
-        await database.inserTable("Mandisa");
+        await database.insertRegNum("CA 371 321");
 
     });
     it('should test reset button', async function () {

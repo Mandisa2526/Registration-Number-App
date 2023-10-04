@@ -80,6 +80,11 @@
             margin: 1em;
             align-self: center;
         }
+
+        .reset {
+            background-color: green;
+            color: white;
+        }
     </style>
 
 </head>
@@ -94,18 +99,19 @@
             <div class="content">
                 <form action="/" method="post">
                     <div class="box-1 text-center">
+                        <p id="reset" class="reset">{{success}}</p>
                         <p class="errorM" style="color: red;font-weight:bold;">{{errorMessages}}</p>
                         <label class="label-body">Registration Number:</label>
-                        <input class="input" type="text" placeholder="eg. CA 112 332,CL 322-332,CJ 3244,CY 322234 " name="inputNumber" />
+                        <input class="input" type="text" placeholder="eg. CA 112 332,CL 322-332,CJ 3244,CY 322234 "
+                            name="inputNumber" />
                     </div>
                     <br>
                     <!--add button-->
                     <div class="text-center">
                         <button class="btn-default btn btn-info" type="submit" name="button">Add</button>
                     </div>
-
-
                 </form>
+
                 <form action="/reg_numbers" method="post">
                     <div class="text-center" style="padding: 1em;">
                         <input type="radio" name="townRadio" class="townItemTypeRadio" value="CF">
@@ -114,12 +120,31 @@
                         <label class="label-body">Cape Town</label>
                         <input type="radio" name="townRadio" class="townItemTypeRadio" value="CJ">
                         <label class="label-body">Paarl</label>
+                        <input type="radio" name="townRadio" class="townItemTypeRadio" value="All">
+                        <label class="label-body">All</label>
                         <br>
                         <div class="text-center" style="padding: 1em;">
                             <button class="btn-default btn btn-info" type="submit" name="button">Show</button>
                         </div>
                     </div>
                 </form>
+                <form action="/reset" method="post">
+                    <div class="text-center">
+                        <a class="btn-default btn btn-primary resetButton" href="/reset" name="button"
+                            onclick="resetBtn()">Reset</a>
+                    </div>
+                </form>
+                <script>
+                    function resetBtn() {
+                        let clearMessage = document.querySelector(".reset");
+
+                        setTimeout(function () {
+                            alert("You are about to clear all users?");
+                            clearMessage.innerHTML = "";
+
+                        }, 3000);
+                    }
+                </script>
 
                 <div class="box-3">
                     <ul style="list-style-type:none;">
@@ -142,10 +167,13 @@
             <script>
 
                 let error = document.querySelector(".errorM");
+                let reset = document.querySelector("#reset");
 
                 setTimeout(function () {
 
                     error.innerHTML = "";
+                    reset.innerHTML = "";
+
 
                 }, 3000);
 

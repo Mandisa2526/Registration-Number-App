@@ -1,15 +1,15 @@
 export default function RegistrationNumberFact(query) {
+    let successMessage;
     let error = '';
-    let letters =   /^[A-Z]{0,2}$/;
 
     async function addRegistration(regNumber) {
-        await setError(regNumber);
+        await validateRegistrationNumber(regNumber);
         if (!error) {
             error = await query.insertRegNum(regNumber);
         }
     }
 
-    async function setError(regNumber){
+    async function validateRegistrationNumber(regNumber){
         let regNumbers = await getAllRegistration();
         if(!regNumber){
             error = 'Enter registration number!';
@@ -18,9 +18,11 @@ export default function RegistrationNumberFact(query) {
         } else if (regNumbers.indexOf(regNumber) !== -1) {
             error = "Registration number exists!";
         } else if ( regNumber.length > 10) {
-            error = 'minimun Legnth exceeded!';
-            //should not allow more than 2 Alphabet characters
-        } else{
+            error = 'Maximum length exceeded!';
+            
+        }else if ( regNumber.length < 7) {
+            error = ' Minimum length exceeded!';  
+        } else {
             error = undefined;
         }
     }
@@ -37,21 +39,42 @@ export default function RegistrationNumberFact(query) {
     function getError() {
         return error;
     }
+    function getSuccessMessage(){
+        let message = successMessage;
+        successMessage = '';
+        return message;
+    }
 
+    function validateRegistrationsForTown(registrationsForTown) {
+        if(registrationsForTown.length == 0){
+            error = "Cannot Filter town, not added!";
+        } else {
+            error = undefined;
+        }
+    }
     async function getRegistrationForTown(town) {
         let regNumbers = await getAllRegistration();
+        console.log(town)
+        if (town == 'All') {
+            return regNumbers;
+        }
         let registrationsForTown = regNumbers.filter(element => element.startsWith(town));
-        if(registrationsForTown.length == 0){
-            error = "Cannot Filter town not added!";
-       }
-       return registrationsForTown;
+        validateRegistrationsForTown(registrationsForTown);
+        return registrationsForTown;
+    }
+    function reset(){
+        successMessage = 'Successfully Cleared';
+        error
+        
     }
 
     return {
         getAllRegistration,
         getError,
-        setError,
+        validateRegistrationNumber,
         getRegistrationForTown,
-        addRegistration
+        addRegistration,
+        reset,
+        getSuccessMessage
     }
 }

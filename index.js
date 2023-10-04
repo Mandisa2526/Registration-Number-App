@@ -45,11 +45,12 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.get('/', async function (req, res) {
-    //req.flash('error', registrationNumObject.getError());
+
     let registrations = await registrationNumObject.getAllRegistration();
     res.render('home', {
         registrations,
         errorMessages: registrationNumObject.getError(),
+        success: registrationNumObject.getSuccessMessage()
     });
 
 });
@@ -57,10 +58,19 @@ app.get('/', async function (req, res) {
 
 app.post('/reg_numbers', async function(req,res){
    let regForTown = req.body.townRadio;
+   let regForAll = req.body.allRadio;
    let registrations = await registrationNumObject.getRegistrationForTown(regForTown);
+   let registrationForAll = await registrationNumObject.getAllRegistration(regForAll);
    res.render('home', {
         registrations,
+        errorMessages: registrationNumObject.getError(),
+        registrationForAll,
    }); 
+});
+app.get('/reset', async function (req,res){
+    registrationNumObject.reset();
+    await database.deleteAllUsers();
+    res.redirect('/');
 });
 
 

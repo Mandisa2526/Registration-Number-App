@@ -3,7 +3,7 @@ export default function Query(db){
     async function insertRegNum(regNum) {
         let town = await getTownId(regNum);
         if (!town) {
-            return 'Town does not exist';
+            return 'Format not supported!';
         }
         await db.none(`INSERT INTO registration(registration_number,towns_id) VALUES ('${regNum}','${town.id}')`);
     }
@@ -16,9 +16,16 @@ export default function Query(db){
     function getRegistrations() {
         return db.any('SELECT registration_number from registration');
     }
+    async function deleteAllUsers(){
+        
+        await db.none('DELETE FROM registration');
+ 
+     }
+
     return{
        insertRegNum,
        getTownId,
        getRegistrations,
+       deleteAllUsers
     }
 }

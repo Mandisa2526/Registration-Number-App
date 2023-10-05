@@ -1,12 +1,13 @@
 export default function RegistrationNumberFact(query) {
     let successMessage;
     let error = '';
-    var letters = /^[A-Za-z]/;
+    
 
     async function addRegistration(regNumber) {
-        await validateRegistrationNumber(regNumber);
+        let regNumtoCap = regNumber.toUpperCase();
+        await validateRegistrationNumber(regNumtoCap);
         if (!error) {
-            error = await query.insertRegNum(regNumber);
+            error = await query.insertRegNum(regNumtoCap);
         }
     }
 
@@ -48,7 +49,7 @@ export default function RegistrationNumberFact(query) {
 
     function validateRegistrationsForTown(registrationsForTown) {
         if(registrationsForTown.length == 0){
-            error = "Cannot Filter town, not added!";
+            error = "Town was not added!";
         } else {
             error = undefined;
         }

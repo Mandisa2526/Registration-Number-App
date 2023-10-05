@@ -1,6 +1,7 @@
 export default function RegistrationNumberFact(query) {
     let successMessage;
     let error = '';
+    var letters = /^[A-Za-z]/;
 
     async function addRegistration(regNumber) {
         await validateRegistrationNumber(regNumber);
@@ -22,7 +23,7 @@ export default function RegistrationNumberFact(query) {
             
         }else if ( regNumber.length < 7) {
             error = ' Minimum length exceeded!';  
-        } else {
+        }else {
             error = undefined;
         }
     }

@@ -23,6 +23,23 @@
 
         }
 
+        #registration-list {
+            list-style-type:none;
+            display: flex;
+        }
+
+        #registration-list > li {
+            font-weight:bolder;
+            text-align: center;
+            border-radius: 25px;
+            border: 4px solid black;
+            background: #ffa200;
+            padding: 12px;
+            margin:1em;
+            width: 150px;
+            height: 50px;
+        }
+
         .header {
             background-color: #252422;
             margin: 1em;
@@ -69,6 +86,23 @@
             box-sizing: border-box;
         }
 
+
+        .flex-parent {
+        
+            display: flex;   
+            padding: 0 1%;
+        }
+
+        .jc-center {
+            justify-content: center;    
+        
+        }
+
+        button.margin-right {
+            margin-right: 20px;
+           
+        }
+
         .radioBtns {
             padding: 1em;
             margin: 1em;
@@ -113,79 +147,69 @@
                     </div>
                     <br>
                     <!--add button-->
-                    <div class="text-center">
-                        <button class="btn-default btn btn-info" type="submit" name="button">Add</button>
-                    </div>
-                </form>
+                    <div class="flex-parent jc-center">
+                        
+                        <button class="btn-default btn btn-info margin-right " type="submit" name="button">Add</button>
 
-                <form action="/reg_numbers" method="post">
-                    <div class="text-center" style="padding: 1em;">
-                        <input type="radio" name="townRadio" class="townItemTypeRadio" value="CF">
-                        <label class="label-body">Queenstown</label>
-                        <input type="radio" name="townRadio" class="townItemTypeRadio" value="CA">
-                        <label class="label-body">Cape Town</label>
-                        <input type="radio" name="townRadio" class="townItemTypeRadio" value="CJ">
-                        <label class="label-body">Paarl</label>
-                        <input type="radio" name="townRadio" class="townItemTypeRadio" value="All">
-                        <label class="label-body">All</label>
-                        <br>
-                        <div class="text-center" style="padding: 1em;">
-                            <button class="btn-default btn btn-info" type="submit" name="button">Show</button>
-                        </div>
-                    </div>
-                </form>
-                <form action="/reset" method="post">
-                    <div class="text-center">
-                        <a class="btn-default btn btn-primary resetButton" href="/reset" name="button"
-                            onclick="resetBtn()">Reset</a>
+                        <form action="/reset" method="post">
+                            
+                            <a class="btn-default btn btn-primary magenta" href="/reset" name="button"
+                                    onclick="resetBtn()">Reset</a>
+                           
+                        </form>
                     </div>
                 </form><br>
-                <script>
-                    function resetBtn() {
-                        let clearMessage = document.querySelector(".reset");
-
-                        setTimeout(function () {
-                            alert("You are about to clear all users?");
-                            clearMessage.innerHTML = "";
-
-                        }, 3000);
-                    }
-                </script>
-
-                <ul style="list-style-type:none;">
-
-                    {{#each registrations}}
-                    <div class="wrap">
-                        <li style="font-weight:bolder;
-                            text-align: center;
-                            border-radius: 25px;
-                            border: 4px solid black;
-                            background: #ffa200;
-                            padding: 20px;
-                            margin:1em;
-                            width: 150px;
-                            height: 50px;">{{this}}
-                        </li>
-                    <div>
-                            {{/each}}
-
-                </ul>
             </div>
+
+            <form action="/reg_numbers" method="post">
+                <div class="text-center" style="padding: 1em;">
+                    <input type="radio" name="townRadio" class="townItemTypeRadio" value="CF">
+                    <label class="label-body">Queenstown</label>
+                    <input type="radio" name="townRadio" class="townItemTypeRadio" value="CA">
+                    <label class="label-body">Cape Town</label>
+                    <input type="radio" name="townRadio" class="townItemTypeRadio" value="CJ">
+                    <label class="label-body">Paarl</label>
+                    <input type="radio" name="townRadio" class="townItemTypeRadio" value="All">
+                    <label class="label-body">All</label>
+                    <br>
+                    <div class="text-center" style="padding: 1em;">
+                        <button class="btn-default btn btn-info" type="submit" name="button">Show</button>
+                    </div>
+                </div>
+            </form>
+            <script>
+                function resetBtn() {
+                    let clearMessage = document.querySelector(".reset");
+
+                    setTimeout(function () {
+                        alert("You are about to clear all users?");
+                        clearMessage.innerHTML = "";
+
+                    }, 3000);
+                }
+            </script>
+
+            <ul id="registration-list">
+                {{#each registrations}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul>
         </div>
-        <script>
+    </div>
+    <script>
 
-            let error = document.querySelector(".errorM");
-            let reset = document.querySelector("#reset");
+        let error = document.querySelector(".errorM");
+        let reset = document.querySelector("#reset");
 
-            setTimeout(function () {
+        setTimeout(function () {
 
-                error.innerHTML = "";
-                reset.innerHTML = "";
+            error.innerHTML = "";
+            reset.innerHTML = "";
 
 
-            }, 3000);
+        }, 3000);
 
-        </script>
+    </script>
     </div>
 
     </div>

@@ -85,6 +85,12 @@
             background-color: green;
             color: white;
         }
+
+        .wrap {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
     </style>
 
 </head>
@@ -133,7 +139,7 @@
                         <a class="btn-default btn btn-primary resetButton" href="/reset" name="button"
                             onclick="resetBtn()">Reset</a>
                     </div>
-                </form>
+                </form><br>
                 <script>
                     function resetBtn() {
                         let clearMessage = document.querySelector(".reset");
@@ -146,10 +152,10 @@
                     }
                 </script>
 
-                <div class="box-3">
-                    <ul style="list-style-type:none;">
-                        {{#each registrations}}
+                <ul style="list-style-type:none;">
 
+                    {{#each registrations}}
+                    <div class="wrap">
                         <li style="font-weight:bolder;
                             text-align: center;
                             border-radius: 25px;
@@ -158,27 +164,29 @@
                             padding: 20px;
                             margin:1em;
                             width: 150px;
-                            height: 50px;">{{this}}</li>
-                        {{/each}}
+                            height: 50px;">{{this}}
+                        </li>
+                    <div>
+                            {{/each}}
 
-                    </ul>
-                </div>
+                </ul>
             </div>
-            <script>
-
-                let error = document.querySelector(".errorM");
-                let reset = document.querySelector("#reset");
-
-                setTimeout(function () {
-
-                    error.innerHTML = "";
-                    reset.innerHTML = "";
-
-
-                }, 3000);
-
-            </script>
         </div>
+        <script>
+
+            let error = document.querySelector(".errorM");
+            let reset = document.querySelector("#reset");
+
+            setTimeout(function () {
+
+                error.innerHTML = "";
+                reset.innerHTML = "";
+
+
+            }, 3000);
+
+        </script>
+    </div>
 
     </div>
 </body>

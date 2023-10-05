@@ -54,7 +54,6 @@ export default function RegistrationNumberFact(query) {
     }
     async function getRegistrationForTown(town) {
         let regNumbers = await getAllRegistration();
-        console.log(town)
         if (town == 'All') {
             return regNumbers;
         }

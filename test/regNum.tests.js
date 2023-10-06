@@ -14,6 +14,13 @@ let database = Query(db);
 describe('the Registration Number App database function/Code' , function(){
 
     this.timeout(10000);
+    it("should allow adding registration numbers", async function (){
+        await database.insertRegNum("CJ 123456",3);
+
+        let result = await database.getRegistrations("All");
+
+        assert.equal(1, result.length);
+    });
    
     it("should able to insert registration numbers for 3  available towns", async function () {
         this.timeout(10000);
@@ -23,29 +30,11 @@ describe('the Registration Number App database function/Code' , function(){
         await database.insertRegNum("CF 121456",2);
         await database.insertRegNum("CJ 123-466",3);
 
-    });
-    it('should be able to display registration number inserted in the text box ' , async function(){
-        let database = Query(db);
-
-        await database.insertRegNum("CA 466 789",1);
-       
-
-        const result = await database.getRegistrations(); 
-        assert.equal(3, result.length);
-        
-      
-    
-    });
-    it("should allow adding multiple registration numbers", async function (){
-        await database.insertRegNum("CF 123456",2);
-        await database.insertRegNum("CA 123-456",1);
-        await database.insertRegNum("CJ 123 456",3);
-
         let result = await database.getRegistrations("All");
 
-        assert.equal(5, result.length);
-    });
+        assert.equal(3, result.length);
 
+    });
 
     it('should test reset button', async function () {
         this.timeout(10000); // Set a longer timeout for this test
@@ -58,7 +47,7 @@ describe('the Registration Number App database function/Code' , function(){
         // Reset the database 
         await database.deleteAllUsers();
     
-        const registrations = await database.getRegistrations(); 
+        const registrations = await database.getRegistrations("All"); 
         assert.equal(registrations.length, 0);
     });
 

@@ -46,7 +46,7 @@ app.use(express.static('public'));
 
 app.get('/', async function (req, res) {
 
-    let registrations = await registrationNumObject.getAllRegistration();
+   let registrations = await registrationNumObject.getAllRegistration();
     res.render('home', {
         registrations,
         errorMessages: registrationNumObject.getError(),
@@ -57,16 +57,22 @@ app.get('/', async function (req, res) {
 
 
 app.post('/reg_numbers', async function(req,res){
-   let regForTown = req.body.townRadio;
    let regForAll = req.body.allRadio;
+   let regForTown = req.body.townRadio;
    let registrations = await registrationNumObject.getRegistrationForTown(regForTown);
    let registrationForAll = await registrationNumObject.getAllRegistration(regForAll);
    res.render('home', {
+        registrationForAll,
         registrations,
         errorMessages: registrationNumObject.getError(),
-        registrationForAll,
    }); 
 });
+app.get('/reg_numbers/:regNumber', async function(req,res){
+
+    res.render('home', {
+        registrations: [ req.params.regNumber ],
+    });     
+ });
 app.get('/reset', async function (req,res){
     registrationNumObject.reset();
     await database.deleteAllUsers();

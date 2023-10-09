@@ -2,6 +2,7 @@ export default function Query(db){
     
     async function insertRegNum(regNum) {
         let town = await getTownId(regNum);
+        
         if (!town) {
             return 'Format not supported!';
         }

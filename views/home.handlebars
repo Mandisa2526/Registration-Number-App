@@ -1,150 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-    <!--bootrap4-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!--bootsrap3-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-    <!--css file-->
-    <link rel="stylesheet" href="/public/css/registration_number.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
-    <title>Document</title>
-    <style>
-        .container {
-            height: 100vh;
-            /*Change the value (works like flex) 👇 here to see results*/
-            /*display: flex;*/
-
-        }
-
-        #registration-list {
-            list-style-type: none;
-            display: flex;
-        }
-
-        .li {
-            font-weight: bolder;
-            text-align: center;
-            border-radius: 25px;
-            border: 4px solid black;
-            background: #ffa200;
-            padding: 12px;
-            margin: 1em;
-            width: 150px;
-            height: 50px;
-
-        }
-
-        .header {
-            background-color: #252422;
-            margin: 1em;
-            padding-inline: 1em;
-
-        }
-
-        .main {
-            background-color: #CCC5B9;
-            padding: 1em;
-            margin: 1em;
-        }
-
-        body {
-            background-color: #EB5E28;
-        }
-
-        .box-1 {
-            background-color: #FFFCF2;
-            padding: 1em;
-            margin: 1em;
-        }
-
-        .box-2 {
-            flex-direction: row;
-            align-self: center;
-            flex-grow: 1;
-            display: flex;
-        }
-
-        .clearfix {
-            overflow: auto;
-            zoom: 1;
-        }
-
-        .input {
-            height: 40px;
-            width: 20%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 4px solid gray;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-
-        .flex-parent {
-
-            display: flex;
-            padding: 0 1%;
-        }
-
-        .jc-center {
-            justify-content: center;
-
-        }
-
-        button.margin-right {
-            margin-right: 20px;
-
-        }
-
-        .radioBtns {
-            padding: 1em;
-            margin: 1em;
-            align-self: center;
-        }
-
-        .dropDown {
-            padding: 1em;
-            margin: 1em;
-            align-self: center;
-        }
-
-        .reset {
-            background-color: green;
-            color: white;
-        }
-
-        .wrap {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-    </style>
-
-</head>
-
-<body>
-    <div class="header">
-        <h1 style="color: #FFFCF2;" class="center text-center">Registration Number App</h1><br>
-    </div>
-    <div class="container">
-
-        <div class="main clearfix">
+    <div class="main clearfix">
             <div class="content">
                 <form action="/" method="post">
                     <div class="box-1 text-center">
                         <p id="reset" class="reset">{{success}}</p>
                         <p class="errorM" style="color: red;font-weight:bold;">{{errorMessages}}</p>
                         <label class="label-body">Registration Number:</label>
-                        <input class="input" type="text" placeholder="eg. CA 112 332,CL 322-332,CJ 3244,CY 322234 "
-                            name="inputNumber" />
+                        <input class="input" type="text" placeholder="eg. CA 112 332,CL 322-332,CJ 3244,CY 322234 "name="inputNumber" />
                     </div>
                     <br>
                     <!--add button-->
@@ -202,8 +64,7 @@
             margin:1em;
             width: 150px;
             height: 50px;
-            list-style-type: none;"
-            >{{this}}</li>
+            list-style-type: none;">{{this}}</li>
                     {{/each}}
                 </div>
 
@@ -225,8 +86,3 @@
 
     </script>
     </div>
-
-    </div>
-</body>
-
-</html>

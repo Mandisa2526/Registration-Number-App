@@ -2,7 +2,7 @@ export default function RegistrationNumberFact(query) {
     let successMessage;
     let error = '';
     
-
+ //add registration and transfer to upper case
     async function addRegistration(regNumber) {
         let regNumtoCap = regNumber.toUpperCase();
         await validateRegistrationNumber(regNumtoCap);
@@ -50,7 +50,7 @@ export default function RegistrationNumberFact(query) {
     function validateRegistrationsForTown(registrationsForTown) {
         if(registrationsForTown.length == 0){
             error = "Town was not added!";
-        } else {
+        }else {
             error = undefined;
         }
     }

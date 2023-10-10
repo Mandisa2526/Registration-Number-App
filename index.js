@@ -1,22 +1,20 @@
-import exphbs from 'express-handlebars';
+// Import ExpressJS
 import express from 'express';
+
+// Import middleware
+import exphbs from 'express-handlebars';
 import bodyParser from 'body-parser';
+import flash from 'express-flash';
+import session from 'express-session';
+
+// Import modules
+import Query from './services/queryReg.js';
+import db from './routes/database_connect.js'
+import registrationNumberApp from './routes/regNumber_routes.js'
 import RegistrationNumberFact from './js/registrationNum.js';
-import flash from  'express-flash';
-import pgPromise from 'pg-promise';
-import  session from 'express-session';
-import Query from './Query/queryReg.js';
 
-// Create Database Connection
-const pgp = pgPromise();
-const connectionString = "postgres://lgcqntdq:P4UKjMZH_2xNewSFy46RaG55YEmwDqsJ@mahmud.db.elephantsql.com/lgcqntdq?ssl=true";
-const db = pgp(connectionString);
-
-let query = Query(db);
-let database = Query(db);
-let app = express();
-//factory function instance
-let registrationNumObject = RegistrationNumberFact(query);
+// Setup a simple ExpressJS server
+const app = express();
 
 //2.configure express-hanndlebar
 const handlebarSetup = exphbs.engine({
@@ -44,48 +42,19 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-app.get('/', async function (req, res) {
-
-   let registrations = await registrationNumObject.getAllRegistration();
-    res.render('home', {
-        registrations,
-        errorMessages: registrationNumObject.getError(),
-        success: registrationNumObject.getSuccessMessage()
-    });
-
-});
+// Instantiate the app
+let query = Query(db);
+let regNumInstance = RegistrationNumberFact(query);
+let regNumApp = registrationNumberApp(regNumInstance, query);
 
 
-app.post('/reg_numbers', async function(req,res){
-   let regForAll = req.body.allRadio;
-   let regForTown = req.body.townRadio;
-   let registrations = await registrationNumObject.getRegistrationForTown(regForTown);
-   let registrationForAll = await registrationNumObject.getAllRegistration(regForAll);
-   res.render('home', {
-        registrationForAll,
-        registrations,
-        errorMessages: registrationNumObject.getError(),
-   }); 
-});
-app.get('/reg_numbers/:regNumber', async function(req,res){
-
-    res.render('home', {
-        registrations: [ req.params.regNumber ],
-    });     
- });
-app.get('/reset', async function (req,res){
-    registrationNumObject.reset();
-    await database.deleteAllUsers();
-    res.redirect('/');
-});
-
-
-app.post('/',async function (req, res) {
-    let regInput = req.body.inputNumber;
-    await registrationNumObject.addRegistration(regInput);
-    res.redirect('/'); 
-});
-
+// Routes
+// TODO: bug fix required - keep showing selected town after filtering
+app.get('/',regNumApp.pageLoad);
+app.post('/',regNumApp.add); // Add button clicked
+app.get('/reset', regNumApp.reset); // Reset button clicked
+app.post('/reg_numbers/',regNumApp.get); // Show button clicked
+app.get('/reg_numbers/:regNumber', regNumApp.getReg); // Registration number clicked
 
 let PORT = process.env.PORT || 3000;
 

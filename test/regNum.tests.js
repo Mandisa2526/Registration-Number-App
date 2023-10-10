@@ -1,7 +1,7 @@
 import assert from "assert";
-import RegistrationNumberFact from '../js/registrationNum.js';
 import pgPromise from 'pg-promise';
-import Query from '../Query/queryReg.js'; 
+import Query from '../services/queryReg.js';
+import RegistrationNumberFact from "../js/registrationNum.js";
 
 
 const pgp = pgPromise();
@@ -11,24 +11,39 @@ const db = pgp(connectionString);
 
 let database = Query(db);
 
-describe('the Registration Number App database function/Code' , function(){
+describe('Registration number factory function code test', function () {
+
+    it('should be able  to return an error message when the registration number exists', async function () {
+        let registrationNumberObject = RegistrationNumberFact();
+
+        registrationNumberObject.addRegistration("CJ 123456");
+        registrationNumberObject.addRegistration("CJ 123456");
+
+        let result = registrationNumberObject.getError();
+
+        assert.equal('Registration number exists!' == '', result);
+
+    });
+
+});
+describe('the Registration Number App database function/Code', function () {
 
     this.timeout(10000);
-    it("should allow adding registration numbers", async function (){
-        await database.insertRegNum("CJ 123456",3);
+    it("should allow adding registration numbers", async function () {
+        await database.insertRegNum("CJ 123456", 3);
 
         let result = await database.getRegistrations("All");
 
         assert.equal(1, result.length);
     });
-   
+
     it("should able to insert registration numbers for 3  available towns", async function () {
         this.timeout(10000);
         let database = Query(db);
 
-        await database.insertRegNum("CA 466 789",1);
-        await database.insertRegNum("CF 121456",2);
-        await database.insertRegNum("CJ 123-466",3);
+        await database.insertRegNum("CA 466 789", 1);
+        await database.insertRegNum("CF 121456", 2);
+        await database.insertRegNum("CJ 123-466", 3);
 
         let result = await database.getRegistrations("All");
 
@@ -39,20 +54,20 @@ describe('the Registration Number App database function/Code' , function(){
     it('should test reset button', async function () {
         this.timeout(10000); // Set a longer timeout for this test
 
-        let database =  Query(db);
+        let database = Query(db);
         // Insert some test data before testing reset
-        await database.insertRegNum('CA 466 789',1);
-        await database.insertRegNum('CF 121456',2);
-    
+        await database.insertRegNum('CA 466 789', 1);
+        await database.insertRegNum('CF 121456', 2);
+
         // Reset the database 
         await database.deleteAllUsers();
-    
-        const registrations = await database.getRegistrations("All"); 
+
+        const registrations = await database.getRegistrations("All");
         assert.equal(registrations.length, 0);
     });
 
 
-    it("should be able to clear the registration data", async function(){
+    it("should be able to clear the registration data", async function () {
         await database.insertRegNum("CA 456 789");
         await database.insertRegNum("CF 123456");
         await database.insertRegNum("CJ 123 456");
@@ -61,11 +76,20 @@ describe('the Registration Number App database function/Code' , function(){
 
         let result = await database.getRegistrations("All");
 
-        assert.equal(0,result.length);
+        assert.equal(0, result.length);
+    });
+    it("should be able to return error message when the format is incorrect", async function () {
+        await database.insertRegNum("CAA 456 789");
+        await database.insertRegNum("CFF 123456");
+
+        let result = await database.getRegistrations("All");
+
+        assert.equal('Format not supported!' == 1, result.length);
     });
 
 
-    after(function(){
+
+    after(function () {
         db.$pool.end
     });
 });

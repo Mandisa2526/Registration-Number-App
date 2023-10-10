@@ -39,7 +39,9 @@ export default function RegistrationNumberFact(query) {
     }
 
     function getError() {
-        return error;
+        let result = error
+        error = undefined
+        return result;
     }
     function getSuccessMessage(){
         let message = successMessage;
@@ -48,10 +50,10 @@ export default function RegistrationNumberFact(query) {
     }
 
     function validateRegistrationsForTown(registrationsForTown) {
-        if(registrationsForTown.length == 0){
-            error = "Town was not added!";
-        }else {
+        if(!registrationsForTown.length == 0){
             error = undefined;
+        }else {
+            error = "Town was not added!";
         }
     }
     async function getRegistrationForTown(town) {
@@ -65,8 +67,7 @@ export default function RegistrationNumberFact(query) {
     }
     function reset(){
         successMessage = 'Successfully Cleared';
-        error
-        
+        error;
     }
 
     return {

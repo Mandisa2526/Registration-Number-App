@@ -26,15 +26,15 @@ const handlebarSetup = exphbs.engine({
 app.engine('handlebars', handlebarSetup);
 app.set('view engine', 'handlebars');
 
-  // initialise session middleware - flash-express depends on it
+  //initialise session middleware - flash-express depends on it
   app.use(session({
-    secret : "<add a secret string here>",
+    secret : '<add a secret string here>',
     resave: false,
     saveUninitialized: true
   }));
 
   // initialise the flash middleware
-app.use(flash());
+  app.use(flash());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json

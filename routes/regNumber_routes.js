@@ -1,12 +1,16 @@
-   
+
 export default function registrationNumberApp(registrationNumObject, query) {
 
     async function pageLoad(req, res) {
         let registrations = await registrationNumObject.getAllRegistration();
+        req.flash('error', 
+            registrationNumObject.getError(),
+        );
+        req.flash('success', registrationNumObject.getSuccessMessage());
         res.render('home', {
             registrations,
-            errorMessages: registrationNumObject.getError(),
-            success: registrationNumObject.getSuccessMessage()
+            //errorMessages: registrationNumObject.getError(),
+             //success: registrationNumObject.getSuccessMessage()
         });
 
     };
@@ -17,10 +21,13 @@ export default function registrationNumberApp(registrationNumObject, query) {
         let regForTown = req.body.townRadio;
         let registrations = await registrationNumObject.getRegistrationForTown(regForTown);
         let registrationForAll = await registrationNumObject.getAllRegistration(regForAll);
+        if(registrations && registrationForAll){
+            req.flash('error',registrationNumObject.getError());
+        }
         res.render('home', {
             registrationForAll,
             registrations,
-            errorMessages: registrationNumObject.getError(),
+            //errorMessages: registrationNumObject.getError(),
         });
     };
     async function getReg(req, res) {

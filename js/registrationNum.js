@@ -14,16 +14,16 @@ export default function RegistrationNumberFact(query) {
     async function validateRegistrationNumber(regNumber){
         let regNumbers = await getAllRegistration();
         if(!regNumber){
-            error = 'Enter registration number!';
+            error = 'Please enter a registration number!';
         //go through the an array
         //check if the regNumber is in an array
         } else if (regNumbers.indexOf(regNumber) !== -1) {
-            error = "Registration number exists!";
+            error = regNumber + ' already exists! Please enter a new registration number.';
         } else if ( regNumber.length > 10) {
             error = 'Maximum length exceeded!';
             
         }else if ( regNumber.length < 7) {
-            error = ' Minimum length exceeded!';  
+            error = 'Minimum length exceeded!';  
         }else {
             error = undefined;
         }
@@ -50,10 +50,10 @@ export default function RegistrationNumberFact(query) {
     }
 
     function validateRegistrationsForTown(registrationsForTown) {
-        if(!registrationsForTown.length == 0){
-            error = undefined;
-        }else {
+        if(registrationsForTown.length == 0){
             error = "Town was not added!";
+        }else {
+            error = undefined;
         }
     }
     async function getRegistrationForTown(town) {

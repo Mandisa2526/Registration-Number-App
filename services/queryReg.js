@@ -19,7 +19,7 @@ export default function Query(db){
     }
     async function deleteAllUsers(){
         
-        await db.none('DELETE FROM registration');
+        await db.none('DELETE FROM registration where 1=1');
  
      }
 
